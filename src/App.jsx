@@ -145,9 +145,9 @@ function App() {
       <p>2 aulas práticas</p>
       <p>Veículo para prova</p>
       <p>Marcação das provas</p>
-      <strong>R$ 299,00</strong>
+      <strong>R$ 399,00</strong>
       <a
-        href="https://wa.me/5511989138763?text=Ol%C3%A1%2C%20Keila!%20Vim%20pelo%20seu%20site%20e%20tenho%20interesse%20no%20Plano%20B%C3%A1sico%20de%20R%24%20299%2C00.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F"
+        href="https://wa.me/5511989138763?text=Ol%C3%A1%2C%20Keila!%20Vim%20pelo%20seu%20site%20e%20tenho%20interesse%20no%20Plano%20B%C3%A1sico%20de%20R%24%20399%2C00.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F"
         target="_blank"
         rel="noreferrer"
       >
