@@ -135,45 +135,57 @@ function App() {
           </div>
         </section>
 
-        {/* PLANOS */}
-        <section id="planos" className="section">
-          <h2>PLANOS PARA SUA CNH</h2>
+     {/* PLANOS */}
+<section id="planos" className="section">
+  <h2>PLANOS PARA SUA CNH</h2>
 
-          <div className="cards">
-            <div className="card">
-              <h3>PLANO BÁSICO</h3>
-              <p>2 aulas práticas</p>
-              <p>Veículo para prova</p>
-              <p>Marcação das provas</p>
-              <strong>R$ 399,00</strong>
-              <a href="https://wa.me/5511989138763">
-                QUERO ESTE PLANO
-              </a>
-            </div>
+  <div className="cards">
+    <div className="card">
+      <h3>PLANO BÁSICO</h3>
+      <p>2 aulas práticas</p>
+      <p>Veículo para prova</p>
+      <p>Marcação das provas</p>
+      <strong>R$ 299,00</strong>
+      <a
+        href="https://wa.me/5511989138763?text=Ol%C3%A1%2C%20Keila!%20Vim%20pelo%20seu%20site%20e%20tenho%20interesse%20no%20Plano%20B%C3%A1sico%20de%20R%24%20299%2C00.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F"
+        target="_blank"
+        rel="noreferrer"
+      >
+        QUERO ESTE PLANO
+      </a>
+    </div>
 
-            <div className="card">
-              <h3>PLANO INTERMEDIÁRIO</h3>
-              <p>6 aulas práticas</p>
-              <p>Veículo para prova</p>
-              <p>Marcação das provas</p>
-              <strong>R$ 599,00</strong>
-              <a href="https://wa.me/5511989138763">
-                QUERO ESTE PLANO
-              </a>
-            </div>
+    <div className="card">
+      <h3>PLANO INTERMEDIÁRIO</h3>
+      <p>6 aulas práticas</p>
+      <p>Veículo para prova</p>
+      <p>Marcação das provas</p>
+      <strong>R$ 599,00</strong>
+      <a
+        href="https://wa.me/5511989138763?text=Ol%C3%A1%2C%20Keila!%20Vim%20pelo%20seu%20site%20e%20tenho%20interesse%20no%20Plano%20Intermedi%C3%A1rio%20de%20R%24%20599%2C00.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F"
+        target="_blank"
+        rel="noreferrer"
+      >
+        QUERO ESTE PLANO
+      </a>
+    </div>
 
-            <div className="card">
-              <h3>PLANO COMPLETO</h3>
-              <p>10 aulas práticas</p>
-              <p>Veículo para prova</p>
-              <p>Marcação das provas</p>
-              <strong>R$ 799,00</strong>
-              <a href="https://wa.me/5511989138763">
-                QUERO ESTE PLANO
-              </a>
-            </div>
-          </div>
-        </section>
+    <div className="card">
+      <h3>PLANO COMPLETO</h3>
+      <p>10 aulas práticas</p>
+      <p>Veículo para prova</p>
+      <p>Marcação das provas</p>
+      <strong>R$ 799,00</strong>
+      <a
+        href="https://wa.me/5511989138763?text=Ol%C3%A1%2C%20Keila!%20Vim%20pelo%20seu%20site%20e%20tenho%20interesse%20no%20Plano%20Completo%20de%20R%24%20799%2C00.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F"
+        target="_blank"
+        rel="noreferrer"
+      >
+        QUERO ESTE PLANO
+      </a>
+    </div>
+  </div>
+</section>
 
         {/* CONTEÚDOS */}
         <section id="conteudos" className="section contents">
