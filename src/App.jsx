@@ -1,16 +1,13 @@
-
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Agenda from "./Agenda";
 
 function App() {
-  // Estado para abrir e fechar os conteúdos
   const [conteudoAberto, setConteudoAberto] = useState(null);
+  const [mostrarEntrada, setMostrarEntrada] = useState(true);
 
-  // Referência para o conteúdo aberto
   const lessonRef = useRef(null);
 
-  // Rola automaticamente até o conteúdo quando ele é aberto
   useEffect(() => {
     if (conteudoAberto && lessonRef.current) {
       setTimeout(() => {
@@ -22,12 +19,10 @@ function App() {
     }
   }, [conteudoAberto]);
 
-  // Estados para controlar o Simulado
   const [perguntaAtual, setPerguntaAtual] = useState(0);
   const [pontuacao, setPontuacao] = useState(0);
   const [mostrarResultado, setMostrarResultado] = useState(false);
 
-  // Lista de perguntas do simulado
   const perguntasSimulado = [
     {
       pergunta:
@@ -49,7 +44,6 @@ function App() {
     },
   ];
 
-  // Função para processar a resposta do usuário
   const responderPergunta = (indexOpcao) => {
     if (indexOpcao === perguntasSimulado[perguntaAtual].respostaCerta) {
       setPontuacao((pontuacaoAtual) => pontuacaoAtual + 1);
@@ -64,7 +58,6 @@ function App() {
     }
   };
 
-  // Função para reiniciar o simulado
   const fecharEReiniciarSimulado = () => {
     setConteudoAberto(null);
     setPerguntaAtual(0);
@@ -72,205 +65,604 @@ function App() {
     setMostrarResultado(false);
   };
 
+  // WHATSAPP GERAL
+  const abrirWhatsApp = (mensagem = "") => {
+    const numero = "5511989138763";
+
+    const url = mensagem
+      ? `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
+      : `https://wa.me/${numero}`;
+
+    window.open(url, "_blank");
+  };
+
+  const planos = [
+    {
+      aulas: "2 AULAS",
+      valor: "R$ 500,00",
+    },
+    {
+      aulas: "6 AULAS",
+      valor: "R$ 800,00",
+    },
+    {
+      aulas: "10 AULAS",
+      valor: "R$ 1.100,00",
+    },
+    {
+      aulas: "15 AULAS",
+      valor: "R$ 1.300,00",
+    },
+    {
+      aulas: "20 AULAS",
+      valor: "R$ 1.600,00",
+    },
+  ];
+
   return (
-    <div>
+    <div className="site">
+
+      {/* =========================
+          TELA DE ENTRADA
+      ========================== */}
+
+      {mostrarEntrada && (
+        <div className="welcome-overlay">
+
+          <div className="welcome-card">
+
+            <div className="welcome-icon">
+              🚗
+            </div>
+
+            <span className="welcome-small">
+              INSTRUTORES DE TRÂNSITO
+            </span>
+
+            <h1>COUTINHO HABILITA</h1>
+
+            <div className="welcome-line"></div>
+
+            <h2>Vanderlei & Queila</h2>
+
+            <p>
+              Sua habilitação, nosso compromisso.
+            </p>
+
+            <p className="welcome-description">
+              Aprenda a dirigir com segurança, confiança e
+              acompanhamento personalizado.
+            </p>
+
+            <div className="welcome-buttons">
+
+              <button
+                className="welcome-primary"
+                onClick={() => setMostrarEntrada(false)}
+              >
+                CONHECER O SITE
+              </button>
+
+              <button
+                className="welcome-secondary"
+                onClick={() => {
+                  setMostrarEntrada(false);
+
+                  setTimeout(() => {
+                    document
+                      .getElementById("agenda")
+                      ?.scrollIntoView({
+                        behavior: "smooth",
+                      });
+                  }, 100);
+                }}
+              >
+                AGENDAR AULA
+              </button>
+
+            </div>
+
+            <div className="welcome-info">
+
+              <span>
+                ✓ Credenciados pelo DETRAN SP
+              </span>
+
+              <span>
+                ✓ +500 alunos aprovados
+              </span>
+
+              <span>
+                ✓ 1ª habilitação e habilitados
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* =========================
+          HEADER
+      ========================== */}
+
       <header className="header">
-        <div className="logo">KEILA</div>
+
+        <div className="logo">
+          COUTINHO <span>HABILITA</span>
+        </div>
 
         <nav>
-          <a href="#inicio">Início</a>
-          <a href="#planos">Planos</a>
-          <a href="#conteudos">Conteúdos</a>
-          <a href="#agenda">Agenda</a>
-          <a href="#contato">Contato</a>
+
+          <a href="#inicio">
+            Início
+          </a>
+
+          <a href="#instrutores">
+            Instrutores
+          </a>
+
+          <a href="#planos">
+            Planos
+          </a>
+
+          <a href="#conteudos">
+            Conteúdos
+          </a>
+
+          <a href="#agenda">
+            Agenda
+          </a>
+
+          <a href="#contato">
+            Contato
+          </a>
+
         </nav>
+
       </header>
 
       <main>
-        {/* BANNER */}
-        <section id="inicio" className="hero">
+
+        {/* =========================
+            HERO
+        ========================== */}
+
+        <section
+          id="inicio"
+          className="hero"
+        >
+
           <img
-            src="/keilaft.jpeg"
-            alt="Instrutora Keila credenciada pelo DETRAN SP"
+            src="/banner-coutinho.jpeg"
+            alt="Coutinho Habilita - Instrutores de Trânsito"
           />
 
-          <div className="hero-buttons">
-            <a href="#agenda" className="button primary">
-              AGENDAR AULA
-            </a>
+          <div className="hero-overlay"></div>
 
-            <a href="#conteudos" className="button secondary">
-              ESTUDAR
-            </a>
-          </div>
-        </section>
+          <div className="hero-content">
 
-        {/* SOBRE */}
-        <section className="about">
-          <div className="about-content">
-            <span className="about-label">SOBRE A INSTRUTORA</span>
+            <span>
+              INSTRUTORES DE TRÂNSITO
+            </span>
 
-            <h2>Aprenda a dirigir com confiança.</h2>
+            <h1>
+              COUTINHO HABILITA
+            </h1>
 
             <p>
-              Aulas de habilitação com acompanhamento personalizado,
-              buscando preparar você para dirigir com segurança,
-              tranquilidade e confiança.
+              Vanderlei & Queila
             </p>
 
-            <p>
-              Aqui você encontra informações, conteúdos para estudar,
-              opções de aulas e uma forma simples de entrar em contato
-              para consultar horários disponíveis.
-            </p>
+            <div className="hero-buttons">
 
-            <a
-              href="https://wa.me/5511989138763"
-              target="_blank"
-              rel="noreferrer"
-              className="button primary"
-            >
-              FALAR COM A KEILA
-            </a>
+              <a
+                href="#agenda"
+                className="button primary"
+              >
+                AGENDAR AULA
+              </a>
+
+              <a
+                href="#planos"
+                className="button secondary"
+              >
+                VER PLANOS
+              </a>
+
+            </div>
+
           </div>
+
         </section>
 
-     {/* PLANOS */}
-<section id="planos" className="section">
-  <h2>PLANOS PARA SUA CNH</h2>
+        {/* =========================
+            INSTRUTORES
+        ========================== */}
 
-  <div className="cards">
-    <div className="card">
-      <h3>PLANO BÁSICO</h3>
-      <p>2 aulas práticas</p>
-      <p>Veículo para prova</p>
-      <p>Marcação das provas</p>
-      <strong>R$ 399,00</strong>
-      <a
-        href="https://wa.me/5511989138763?text=Ol%C3%A1%2C%20Keila!%20Vim%20pelo%20seu%20site%20e%20tenho%20interesse%20no%20Plano%20B%C3%A1sico%20de%20R%24%20399%2C00.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F"
-        target="_blank"
-        rel="noreferrer"
-      >
-        QUERO ESTE PLANO
-      </a>
-    </div>
+        <section
+          id="instrutores"
+          className="instructors section"
+        >
 
-    <div className="card">
-      <h3>PLANO INTERMEDIÁRIO</h3>
-      <p>6 aulas práticas</p>
-      <p>Veículo para prova</p>
-      <p>Marcação das provas</p>
-      <strong>R$ 599,00</strong>
-      <a
-        href="https://wa.me/5511989138763?text=Ol%C3%A1%2C%20Keila!%20Vim%20pelo%20seu%20site%20e%20tenho%20interesse%20no%20Plano%20Intermedi%C3%A1rio%20de%20R%24%20599%2C00.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F"
-        target="_blank"
-        rel="noreferrer"
-      >
-        QUERO ESTE PLANO
-      </a>
-    </div>
+          <span className="section-label">
+            CONHEÇA QUEM VAI TE ACOMPANHAR
+          </span>
 
-    <div className="card">
-      <h3>PLANO COMPLETO</h3>
-      <p>10 aulas práticas</p>
-      <p>Veículo para prova</p>
-      <p>Marcação das provas</p>
-      <strong>R$ 799,00</strong>
-      <a
-        href="https://wa.me/5511989138763?text=Ol%C3%A1%2C%20Keila!%20Vim%20pelo%20seu%20site%20e%20tenho%20interesse%20no%20Plano%20Completo%20de%20R%24%20799%2C00.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F"
-        target="_blank"
-        rel="noreferrer"
-      >
-        QUERO ESTE PLANO
-      </a>
-    </div>
-  </div>
-</section>
+          <h2>
+            NOSSOS INSTRUTORES
+          </h2>
 
-        {/* CONTEÚDOS */}
-        <section id="conteudos" className="section contents">
-          <h2>📚 CONTEÚDOS PARA SUA CNH</h2>
+          <p className="section-intro">
+            Experiência, acompanhamento personalizado e foco em
+            preparar você para dirigir com segurança e confiança.
+          </p>
+
+          <div className="instructors-grid">
+
+            {/* VANDERLEI */}
+
+            <div className="instructor-card">
+
+              <div className="instructor-photo">
+                👨‍🏫
+              </div>
+
+              <span>
+                INSTRUTOR
+              </span>
+
+              <h3>
+                Vanderlei
+              </h3>
+
+              <p>
+                Atendimento personalizado para quem busca
+                aprender a dirigir com segurança e tranquilidade.
+              </p>
+
+            </div>
+
+            {/* QUEILA */}
+
+            <div className="instructor-card">
+
+              <div className="instructor-photo">
+                👩‍🏫
+              </div>
+
+              <span>
+                INSTRUTORA
+              </span>
+
+              <h3>
+                Queila
+              </h3>
+
+              <p>
+                Acompanhamento personalizado para ajudar você
+                a conquistar sua habilitação com confiança.
+              </p>
+
+            </div>
+
+          </div>
+
+          <div className="instructor-highlights">
+
+            <div>
+
+              <strong>
+                +500
+              </strong>
+
+              <span>
+                ALUNOS APROVADOS
+              </span>
+
+            </div>
+
+            <div>
+
+              <strong>
+                SP
+              </strong>
+
+              <span>
+                ZONA OESTE, NORTE E CENTRO
+              </span>
+
+            </div>
+
+            <div>
+
+              <strong>
+                CNH
+              </strong>
+
+              <span>
+                1ª HABILITAÇÃO E HABILITADOS
+              </span>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =========================
+            PLANOS
+        ========================== */}
+
+        <section
+          id="planos"
+          className="section plans-section"
+        >
+
+          <span className="section-label">
+            ESCOLHA O MELHOR PARA VOCÊ
+          </span>
+
+          <h2>
+            PLANOS PARA SUA CNH
+          </h2>
+
+          <p className="section-intro">
+            Todos os planos contam com veículo para prova e
+            marcação das provas.
+          </p>
+
+          <div className="cards">
+
+            {planos.map((plano, index) => (
+
+              <div
+                className="card"
+                key={index}
+              >
+
+                <h3>
+                  {plano.aulas}
+                </h3>
+
+                <div className="card-tag">
+                  PRIMEIRA HABILITAÇÃO
+                </div>
+
+                <p>
+                  ✓ Veículo para prova
+                </p>
+
+                <p>
+                  ✓ Marcação das provas
+                </p>
+
+                <strong>
+                  {plano.valor}
+                </strong>
+
+                <small>
+                  à vista
+                </small>
+
+                <button
+                  onClick={() =>
+                    abrirWhatsApp(
+                      `Olá! Vim pelo site da Coutinho Habilita e tenho interesse no plano de ${plano.aulas} no valor de ${plano.valor}. Gostaria de mais informações.`
+                    )
+                  }
+                >
+                  QUERO ESTE PLANO
+                </button>
+
+              </div>
+
+            ))}
+
+          </div>
+
+          <p className="taxas">
+            ⚠️ Taxas estaduais, exames, emissão da CNH e demais
+            taxas do DETRAN são cobradas à parte.
+          </p>
+
+        </section>
+
+        {/* =========================
+            CONTEÚDOS
+        ========================== */}
+
+        <section
+          id="conteudos"
+          className="section contents"
+        >
+
+          <h2>
+            📚 CONTEÚDOS PARA SUA CNH
+          </h2>
 
           <p className="contents-intro">
-            Estude os principais assuntos para chegar preparado para a prova.
+            Estude os principais assuntos para chegar preparado
+            para a prova.
           </p>
 
           <div className="content-grid">
-            {/* SINALIZAÇÃO */}
-            <div className="content-card">
-              <span>🚦</span>
-              <h3>Sinalização</h3>
-              <p>Conheça placas, sinais e regras de circulação.</p>
 
-              <button onClick={() => setConteudoAberto("sinalizacao")}>
+            {/* SINALIZAÇÃO */}
+
+            <div className="content-card">
+
+              <span>
+                🚦
+              </span>
+
+              <h3>
+                Sinalização
+              </h3>
+
+              <p>
+                Conheça placas, sinais e regras de circulação.
+              </p>
+
+              <button
+                onClick={() =>
+                  setConteudoAberto("sinalizacao")
+                }
+              >
                 VER CONTEÚDO
               </button>
+
             </div>
 
             {/* LEGISLAÇÃO */}
-            <div className="content-card">
-              <span>📖</span>
-              <h3>Legislação</h3>
-              <p>Aprenda as principais leis e normas de trânsito.</p>
 
-              <button onClick={() => setConteudoAberto("legislacao")}>
+            <div className="content-card">
+
+              <span>
+                📖
+              </span>
+
+              <h3>
+                Legislação
+              </h3>
+
+              <p>
+                Aprenda as principais leis e normas de trânsito.
+              </p>
+
+              <button
+                onClick={() =>
+                  setConteudoAberto("legislacao")
+                }
+              >
                 VER CONTEÚDO
               </button>
+
             </div>
 
             {/* DIREÇÃO DEFENSIVA */}
-            <div className="content-card">
-              <span>🛡️</span>
-              <h3>Direção defensiva</h3>
-              <p>Aprenda como dirigir de forma segura e preventiva.</p>
 
-              <button onClick={() => setConteudoAberto("defensiva")}>
+            <div className="content-card">
+
+              <span>
+                🛡️
+              </span>
+
+              <h3>
+                Direção defensiva
+              </h3>
+
+              <p>
+                Aprenda como dirigir de forma segura e preventiva.
+              </p>
+
+              <button
+                onClick={() =>
+                  setConteudoAberto("defensiva")
+                }
+              >
                 VER CONTEÚDO
               </button>
+
             </div>
 
             {/* MECÂNICA */}
+
             <div className="content-card">
-              <span>🔧</span>
-              <h3>Mecânica básica</h3>
+
+              <span>
+                🔧
+              </span>
+
+              <h3>
+                Mecânica básica
+              </h3>
+
               <p>
-                Entenda os principais componentes e cuidados com o veículo.
+                Entenda os principais componentes e cuidados
+                com o veículo.
               </p>
 
-              <button onClick={() => setConteudoAberto("mecanica")}>
+              <button
+                onClick={() =>
+                  setConteudoAberto("mecanica")
+                }
+              >
                 VER CONTEÚDO
               </button>
+
             </div>
 
             {/* PRIMEIROS SOCORROS */}
+
             <div className="content-card">
-              <span>🩹</span>
-              <h3>Primeiros socorros</h3>
+
+              <span>
+                🩹
+              </span>
+
+              <h3>
+                Primeiros socorros
+              </h3>
+
               <p>
-                Saiba como agir em situações de emergência no trânsito.
+                Saiba como agir em situações de emergência
+                no trânsito.
               </p>
 
-              <button onClick={() => setConteudoAberto("socorros")}>
+              <button
+                onClick={() =>
+                  setConteudoAberto("socorros")
+                }
+              >
                 VER CONTEÚDO
               </button>
+
             </div>
 
-            {/* SIMULADOS */}
-            <div className="content-card">
-              <span>📝</span>
-              <h3>Simulados</h3>
-              <p>Teste seus conhecimentos antes da prova teórica.</p>
+            {/* SIMULADO */}
 
-              <button onClick={() => setConteudoAberto("simulado")}>
+            <div className="content-card">
+
+              <span>
+                📝
+              </span>
+
+              <h3>
+                Simulados
+              </h3>
+
+              <p>
+                Teste seus conhecimentos antes da prova teórica.
+              </p>
+
+              <button
+                onClick={() =>
+                  setConteudoAberto("simulado")
+                }
+              >
                 COMEÇAR SIMULADO
               </button>
+
             </div>
+
           </div>
 
-          {/* SINALIZAÇÃO */}
+          {/* =========================
+              AULAS
+          ========================== */}
+
           {conteudoAberto === "sinalizacao" && (
-            <div className="lesson" ref={lessonRef}>
-              <h3>🚦 Sinalização de Trânsito</h3>
+
+            <div
+              className="lesson"
+              ref={lessonRef}
+            >
+
+              <h3>
+                🚦 Sinalização de Trânsito
+              </h3>
 
               <p>
                 As placas de trânsito ajudam a organizar a circulação.
@@ -278,36 +670,56 @@ function App() {
 
               <button
                 className="close-lesson"
-                onClick={() => setConteudoAberto(null)}
+                onClick={() =>
+                  setConteudoAberto(null)
+                }
               >
                 FECHAR CONTEÚDO
               </button>
+
             </div>
+
           )}
 
-          {/* LEGISLAÇÃO */}
           {conteudoAberto === "legislacao" && (
-            <div className="lesson" ref={lessonRef}>
-              <h3>📖 Legislação de Trânsito</h3>
+
+            <div
+              className="lesson"
+              ref={lessonRef}
+            >
+
+              <h3>
+                📖 Legislação de Trânsito
+              </h3>
 
               <p>
-                Conheça as principais regras que todo condutor precisa
-                conhecer.
+                Conheça as principais regras que todo condutor
+                precisa conhecer.
               </p>
 
               <button
                 className="close-lesson"
-                onClick={() => setConteudoAberto(null)}
+                onClick={() =>
+                  setConteudoAberto(null)
+                }
               >
                 FECHAR CONTEÚDO
               </button>
+
             </div>
+
           )}
 
-          {/* DIREÇÃO DEFENSIVA */}
           {conteudoAberto === "defensiva" && (
-            <div className="lesson" ref={lessonRef}>
-              <h3>🛡️ Direção Defensiva</h3>
+
+            <div
+              className="lesson"
+              ref={lessonRef}
+            >
+
+              <h3>
+                🛡️ Direção Defensiva
+              </h3>
 
               <p>
                 Direção defensiva é dirigir de maneira preventiva.
@@ -315,17 +727,27 @@ function App() {
 
               <button
                 className="close-lesson"
-                onClick={() => setConteudoAberto(null)}
+                onClick={() =>
+                  setConteudoAberto(null)
+                }
               >
                 FECHAR CONTEÚDO
               </button>
+
             </div>
+
           )}
 
-          {/* MECÂNICA */}
           {conteudoAberto === "mecanica" && (
-            <div className="lesson" ref={lessonRef}>
-              <h3>🔧 Mecânica Básica</h3>
+
+            <div
+              className="lesson"
+              ref={lessonRef}
+            >
+
+              <h3>
+                🔧 Mecânica Básica
+              </h3>
 
               <p>
                 Conhecimentos básicos sobre o funcionamento do veículo.
@@ -333,41 +755,64 @@ function App() {
 
               <button
                 className="close-lesson"
-                onClick={() => setConteudoAberto(null)}
+                onClick={() =>
+                  setConteudoAberto(null)
+                }
               >
                 FECHAR CONTEÚDO
               </button>
+
             </div>
+
           )}
 
-          {/* PRIMEIROS SOCORROS */}
           {conteudoAberto === "socorros" && (
-            <div className="lesson" ref={lessonRef}>
-              <h3>🩹 Primeiros Socorros</h3>
+
+            <div
+              className="lesson"
+              ref={lessonRef}
+            >
+
+              <h3>
+                🩹 Primeiros Socorros
+              </h3>
 
               <p>
-                Conhecimentos básicos para saber como agir diante de uma
-                emergência.
+                Conhecimentos básicos para saber como agir diante
+                de uma emergência.
               </p>
 
               <button
                 className="close-lesson"
-                onClick={() => setConteudoAberto(null)}
+                onClick={() =>
+                  setConteudoAberto(null)
+                }
               >
                 FECHAR CONTEÚDO
               </button>
+
             </div>
+
           )}
 
-          {/* SIMULADO */}
+          {/* =========================
+              SIMULADO
+          ========================== */}
+
           {conteudoAberto === "simulado" && (
+
             <div
               className="lesson simulado-container"
               ref={lessonRef}
             >
+
               {mostrarResultado ? (
+
                 <div className="resultado-simulado">
-                  <h3>🏁 Fim do Simulado!</h3>
+
+                  <h3>
+                    🏁 Fim do Simulado!
+                  </h3>
 
                   <p>
                     Você acertou {pontuacao} de{" "}
@@ -380,9 +825,13 @@ function App() {
                   >
                     FINALIZAR
                   </button>
+
                 </div>
+
               ) : (
+
                 <div className="pergunta-simulado">
+
                   <h3>
                     📝 Pergunta {perguntaAtual + 1} de{" "}
                     {perguntasSimulado.length}
@@ -392,67 +841,148 @@ function App() {
                     {perguntasSimulado[perguntaAtual].pergunta}
                   </p>
 
-                  <div
-                    className="opcoes-container"
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                      margin: "20px 0",
-                    }}
-                  >
-                    {perguntasSimulado[perguntaAtual].opcoes.map(
+                  <div className="opcoes-container">
+
+                    {perguntasSimulado[
+                      perguntaAtual
+                    ].opcoes.map(
                       (opcao, index) => (
+
                         <button
                           key={index}
-                          style={{
-                            padding: "10px",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => responderPergunta(index)}
+                          onClick={() =>
+                            responderPergunta(index)
+                          }
                         >
                           {opcao}
                         </button>
+
                       )
                     )}
-                  </div>
 
-                  <br />
+                  </div>
 
                   <button
                     className="close-lesson"
-                    onClick={fecharEReiniciarSimulado}
+                    onClick={
+                      fecharEReiniciarSimulado
+                    }
                   >
                     SAIR DO SIMULADO
                   </button>
+
                 </div>
+
               )}
+
             </div>
+
           )}
+
         </section>
 
-        {/* AGENDA */}
-        <section id="agenda" className="section agenda">
-          <h2>📅 AGENDE SUA AULA</h2>
+        {/* =========================
+            AGENDA
+        ========================== */}
+
+        <section
+          id="agenda"
+          className="section agenda"
+        >
+
+          <span className="section-label">
+            FAÇA SEU AGENDAMENTO
+          </span>
+
+          <h2>
+            📅 AGENDE SUA AULA
+          </h2>
 
           <p>
-            Escolha o dia e horário abaixo. A Keila confirma pelo WhatsApp.
+            Escolha o dia e horário. Nossa equipe confirma
+            o atendimento pelo WhatsApp.
           </p>
 
           <Agenda />
+
         </section>
 
-        {/* CONTATO */}
-        <section id="contato" className="contact">
-          <h2>FALE COM A KEILA</h2>
+        {/* =========================
+            CONTATO
+        ========================== */}
 
-          <p>📱 WhatsApp: (11) 98913-8763</p>
-          <p>📱 WhatsApp: (11) 95718-5176</p>
-          <p>📸 Instagram: @instrutorakeila</p>
+        <section
+          id="contato"
+          className="contact"
+        >
+
+          <span className="section-label">
+            FALE CONOSCO
+          </span>
+
+          <h2>
+            ENTRE EM CONTATO
+          </h2>
+
+          <p>
+            📱 WhatsApp:{" "}
+            <strong>
+              (11) 98913-8763
+            </strong>
+          </p>
+
+          <p>
+            📱 WhatsApp:{" "}
+            <strong>
+              (11) 95718-5176
+            </strong>
+          </p>
+
+          <a
+            href="https://www.instagram.com/habilitacoutinho/"
+            target="_blank"
+            rel="noreferrer"
+            className="instagram-link"
+          >
+            📸 Instagram: @habilitacoutinho
+          </a>
+
+          <div className="contact-buttons">
+
+            <button
+              className="button primary"
+              onClick={() =>
+                abrirWhatsApp(
+                  "Olá! Vim pelo site da Coutinho Habilita e gostaria de informações sobre as aulas."
+                )
+              }
+            >
+              FALAR NO WHATSAPP
+            </button>
+
+            <a
+              href="https://www.instagram.com/habilitacoutinho/"
+              target="_blank"
+              rel="noreferrer"
+              className="button instagram-button"
+            >
+              ABRIR INSTAGRAM
+            </a>
+
+          </div>
+
         </section>
+
       </main>
 
-      <footer>© 2026 Instrutora Keila</footer>
+      {/* =========================
+          FOOTER
+      ========================== */}
+
+      <footer>
+        © 2026 COUTINHO HABILITA — Vanderlei & Queila
+      </footer>
+
     </div>
   );
 }

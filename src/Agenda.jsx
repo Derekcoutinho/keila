@@ -24,8 +24,11 @@ function Agenda() {
     const numeros = valor.replace(/\D/g, "").slice(0, 11);
 
     if (numeros.length <= 2) return numeros;
-    if (numeros.length <= 7)
+
+    if (numeros.length <= 7) {
       return `(${numeros.slice(0, 2)}) ${numeros.slice(2)}`;
+    }
+
     return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(
       7
     )}`;
@@ -37,11 +40,13 @@ function Agenda() {
 
   const telefoneValido = (valor) => {
     const numeros = valor.replace(/\D/g, "");
+
     return numeros.length === 10 || numeros.length === 11;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setErro("");
 
     if (!nome || !telefone || !data || !horario) {
@@ -50,29 +55,41 @@ function Agenda() {
     }
 
     if (!telefoneValido(telefone)) {
-      setErro("Digite um telefone válido, com DDD. Ex: (11) 99999-9999");
+      setErro(
+        "Digite um telefone válido, com DDD. Ex: (11) 99999-9999"
+      );
       return;
     }
 
     setEnviando(true);
 
     try {
-      // Verifica se já existe agendamento nesse dia e horário
+      // ==============================
+      // VERIFICA HORÁRIO DISPONÍVEL
+      // ==============================
+
       const agendamentosRef = collection(db, "agendamentos");
+
       const consulta = query(
         agendamentosRef,
         where("data", "==", data),
         where("horario", "==", horario)
       );
+
       const resultado = await getDocs(consulta);
 
       if (!resultado.empty) {
         setErro(
           "Esse horário já está ocupado. Escolha outro dia ou horário."
         );
+
         setEnviando(false);
         return;
       }
+
+      // ==============================
+      // SALVA NO FIREBASE
+      // ==============================
 
       await addDoc(agendamentosRef, {
         nome,
@@ -83,49 +100,106 @@ function Agenda() {
         criadoEm: serverTimestamp(),
       });
 
-      const dataFormatada = new Date(data + "T00:00:00").toLocaleDateString(
-        "pt-BR"
-      );
+      // ==============================
+      // FORMATA DATA
+      // ==============================
 
-      const mensagem = `Olá, Keila! Meu nome é ${nome}. Gostaria de agendar uma aula para o dia ${dataFormatada} às ${horario}. Meu telefone: ${telefone}`;
+      const dataFormatada = new Date(
+        data + "T00:00:00"
+      ).toLocaleDateString("pt-BR");
 
-      const numeroKeila = "5511989138763";
-      const linkWhatsapp = `https://wa.me/${numeroKeila}?text=${encodeURIComponent(
+      // ==============================
+      // MENSAGEM WHATSAPP
+      // ==============================
+
+      const mensagem = `Olá! Vim pelo site da Coutinho Habilita.
+
+Meu nome é ${nome}.
+
+Gostaria de agendar uma aula:
+
+📅 Data: ${dataFormatada}
+🕐 Horário: ${horario}
+📱 Meu telefone: ${telefone}
+
+Aguardo a confirmação do atendimento.`;
+
+      // ==============================
+      // WHATSAPP PRINCIPAL
+      // ==============================
+
+      const numeroAtendimento = "5511989138763";
+
+      const linkWhatsapp = `https://wa.me/${numeroAtendimento}?text=${encodeURIComponent(
         mensagem
       )}`;
 
       window.open(linkWhatsapp, "_blank");
 
+      // ==============================
+      // SUCESSO
+      // ==============================
+
       setSucesso(true);
+
       setNome("");
       setTelefone("");
       setData("");
       setHorario("");
+
     } catch (err) {
       console.error(err);
-      setErro("Não foi possível agendar agora. Tenta de novo em instantes.");
+
+      setErro(
+        "Não foi possível agendar agora. Tente novamente em instantes."
+      );
+
     } finally {
       setEnviando(false);
     }
   };
 
+  // ==============================
+  // TELA DE SUCESSO
+  // ==============================
+
   if (sucesso) {
     return (
       <div className="agenda-form">
+
         <p className="quiz-resultado">
-          ✅ Aula agendada! A Keila vai confirmar em breve.
+          ✅ Agendamento registrado!
         </p>
-        <button className="close-lesson" onClick={() => setSucesso(false)}>
+
+        <p>
+          A equipe da <strong>Coutinho Habilita</strong> irá
+          confirmar seu atendimento pelo WhatsApp.
+        </p>
+
+        <button
+          className="close-lesson"
+          onClick={() => setSucesso(false)}
+        >
           AGENDAR OUTRA AULA
         </button>
+
       </div>
     );
   }
 
+  // ==============================
+  // FORMULÁRIO
+  // ==============================
+
   return (
-    <form className="agenda-form" onSubmit={handleSubmit}>
+    <form
+      className="agenda-form"
+      onSubmit={handleSubmit}
+    >
+
       <label>
         Nome
+
         <input
           type="text"
           value={nome}
@@ -136,6 +210,7 @@ function Agenda() {
 
       <label>
         Telefone
+
         <input
           type="tel"
           value={telefone}
@@ -146,6 +221,7 @@ function Agenda() {
 
       <label>
         Data
+
         <input
           type="date"
           value={data}
@@ -155,21 +231,45 @@ function Agenda() {
 
       <label>
         Horário
-        <select value={horario} onChange={(e) => setHorario(e.target.value)}>
-          <option value="">Selecione</option>
+
+        <select
+          value={horario}
+          onChange={(e) => setHorario(e.target.value)}
+        >
+
+          <option value="">
+            Selecione
+          </option>
+
           {HORARIOS.map((h) => (
-            <option key={h} value={h}>
+            <option
+              key={h}
+              value={h}
+            >
               {h}
             </option>
           ))}
+
         </select>
+
       </label>
 
-      {erro && <p className="agenda-erro">{erro}</p>}
+      {erro && (
+        <p className="agenda-erro">
+          {erro}
+        </p>
+      )}
 
-      <button className="button primary" type="submit" disabled={enviando}>
-        {enviando ? "AGENDANDO..." : "AGENDAR AULA"}
+      <button
+        className="button primary"
+        type="submit"
+        disabled={enviando}
+      >
+        {enviando
+          ? "AGENDANDO..."
+          : "AGENDAR AULA"}
       </button>
+
     </form>
   );
 }
