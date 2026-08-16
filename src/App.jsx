@@ -45,8 +45,13 @@ function App() {
   ];
 
   const responderPergunta = (indexOpcao) => {
-    if (indexOpcao === perguntasSimulado[perguntaAtual].respostaCerta) {
-      setPontuacao((pontuacaoAtual) => pontuacaoAtual + 1);
+    if (
+      indexOpcao ===
+      perguntasSimulado[perguntaAtual].respostaCerta
+    ) {
+      setPontuacao(
+        (pontuacaoAtual) => pontuacaoAtual + 1
+      );
     }
 
     const proximaPergunta = perguntaAtual + 1;
@@ -65,12 +70,14 @@ function App() {
     setMostrarResultado(false);
   };
 
-  // WHATSAPP GERAL
+  // WHATSAPP PRINCIPAL
   const abrirWhatsApp = (mensagem = "") => {
-    const numero = "5511989138763";
+    const numero = "5511988988859";
 
     const url = mensagem
-      ? `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
+      ? `https://wa.me/${numero}?text=${encodeURIComponent(
+          mensagem
+        )}`
       : `https://wa.me/${numero}`;
 
     window.open(url, "_blank");
@@ -138,7 +145,9 @@ function App() {
 
               <button
                 className="welcome-primary"
-                onClick={() => setMostrarEntrada(false)}
+                onClick={() =>
+                  setMostrarEntrada(false)
+                }
               >
                 CONHECER O SITE
               </button>
@@ -157,7 +166,7 @@ function App() {
                   }, 100);
                 }}
               >
-                AGENDAR AULA
+                SOLICITAR ATENDIMENTO
               </button>
 
             </div>
@@ -212,7 +221,7 @@ function App() {
           </a>
 
           <a href="#agenda">
-            Agenda
+            Atendimento
           </a>
 
           <a href="#contato">
@@ -261,7 +270,7 @@ function App() {
                 href="#agenda"
                 className="button primary"
               >
-                AGENDAR AULA
+                SOLICITAR ATENDIMENTO
               </a>
 
               <a
@@ -301,8 +310,6 @@ function App() {
 
           <div className="instructors-grid">
 
-            {/* VANDERLEI */}
-
             <div className="instructor-card">
 
               <div className="instructor-photo">
@@ -323,8 +330,6 @@ function App() {
               </p>
 
             </div>
-
-            {/* QUEILA */}
 
             <div className="instructor-card">
 
@@ -352,7 +357,6 @@ function App() {
           <div className="instructor-highlights">
 
             <div>
-
               <strong>
                 +500
               </strong>
@@ -360,11 +364,9 @@ function App() {
               <span>
                 ALUNOS APROVADOS
               </span>
-
             </div>
 
             <div>
-
               <strong>
                 SP
               </strong>
@@ -372,11 +374,9 @@ function App() {
               <span>
                 ZONA OESTE, NORTE E CENTRO
               </span>
-
             </div>
 
             <div>
-
               <strong>
                 CNH
               </strong>
@@ -384,7 +384,6 @@ function App() {
               <span>
                 1ª HABILITAÇÃO E HABILITADOS
               </span>
-
             </div>
 
           </div>
@@ -489,8 +488,6 @@ function App() {
 
           <div className="content-grid">
 
-            {/* SINALIZAÇÃO */}
-
             <div className="content-card">
 
               <span>
@@ -514,8 +511,6 @@ function App() {
               </button>
 
             </div>
-
-            {/* LEGISLAÇÃO */}
 
             <div className="content-card">
 
@@ -541,8 +536,6 @@ function App() {
 
             </div>
 
-            {/* DIREÇÃO DEFENSIVA */}
-
             <div className="content-card">
 
               <span>
@@ -566,8 +559,6 @@ function App() {
               </button>
 
             </div>
-
-            {/* MECÂNICA */}
 
             <div className="content-card">
 
@@ -594,8 +585,6 @@ function App() {
 
             </div>
 
-            {/* PRIMEIROS SOCORROS */}
-
             <div className="content-card">
 
               <span>
@@ -620,8 +609,6 @@ function App() {
               </button>
 
             </div>
-
-            {/* SIMULADO */}
 
             <div className="content-card">
 
@@ -650,7 +637,7 @@ function App() {
           </div>
 
           {/* =========================
-              AULAS
+              CONTEÚDOS ABERTOS
           ========================== */}
 
           {conteudoAberto === "sinalizacao" && (
@@ -882,7 +869,7 @@ function App() {
         </section>
 
         {/* =========================
-            AGENDA
+            ATENDIMENTO
         ========================== */}
 
         <section
@@ -891,16 +878,17 @@ function App() {
         >
 
           <span className="section-label">
-            FAÇA SEU AGENDAMENTO
+            FALE COM A NOSSA EQUIPE
           </span>
 
           <h2>
-            📅 AGENDE SUA AULA
+            📋 SOLICITE SEU ATENDIMENTO
           </h2>
 
           <p>
-            Escolha o dia e horário. Nossa equipe confirma
-            o atendimento pelo WhatsApp.
+            Preencha seus dados e envie para o nosso WhatsApp.
+            Nossa equipe entrará em contato para apresentar as
+            opções de aulas e combinar o melhor dia e horário.
           </p>
 
           <Agenda />
@@ -927,14 +915,7 @@ function App() {
           <p>
             📱 WhatsApp:{" "}
             <strong>
-              (11) 98913-8763
-            </strong>
-          </p>
-
-          <p>
-            📱 WhatsApp:{" "}
-            <strong>
-              (11) 95718-5176
+              (11) 98898-8859
             </strong>
           </p>
 

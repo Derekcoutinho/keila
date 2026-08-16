@@ -4,18 +4,15 @@ import {
   collection,
   addDoc,
   serverTimestamp,
-  query,
-  where,
-  getDocs,
 } from "firebase/firestore";
-
-const HORARIOS = ["09:00", "10:00", "11:00", "14:00", "15:00"];
 
 function Agenda() {
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [data, setData] = useState("");
-  const [horario, setHorario] = useState("");
+  const [idade, setIdade] = useState("");
+  const [regiao, setRegiao] = useState("");
+  const [origem, setOrigem] = useState("");
+
   const [enviando, setEnviando] = useState(false);
   const [sucesso, setSucesso] = useState(false);
   const [erro, setErro] = useState("");
@@ -23,15 +20,18 @@ function Agenda() {
   const formatarTelefone = (valor) => {
     const numeros = valor.replace(/\D/g, "").slice(0, 11);
 
-    if (numeros.length <= 2) return numeros;
+    if (numeros.length <= 2) {
+      return numeros;
+    }
 
     if (numeros.length <= 7) {
       return `(${numeros.slice(0, 2)}) ${numeros.slice(2)}`;
     }
 
-    return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(
+    return `(${numeros.slice(0, 2)}) ${numeros.slice(
+      2,
       7
-    )}`;
+    )}-${numeros.slice(7)}`;
   };
 
   const handleTelefoneChange = (e) => {
@@ -49,147 +49,133 @@ function Agenda() {
 
     setErro("");
 
-    if (!nome || !telefone || !data || !horario) {
+    // =========================
+    // VALIDAÇÃO
+    // =========================
+
+    if (!nome || !telefone || !idade || !regiao || !origem) {
       setErro("Preencha todos os campos.");
       return;
     }
 
     if (!telefoneValido(telefone)) {
       setErro(
-        "Digite um telefone válido, com DDD. Ex: (11) 99999-9999"
+        "Digite um WhatsApp válido com DDD. Ex: (11) 99999-9999"
       );
+      return;
+    }
+
+    if (idade < 18 || idade > 100) {
+      setErro("Digite uma idade válida.");
       return;
     }
 
     setEnviando(true);
 
     try {
-      // ==============================
-      // VERIFICA HORÁRIO DISPONÍVEL
-      // ==============================
+      // =========================
+      // SALVAR NO FIREBASE
+      // =========================
 
-      const agendamentosRef = collection(db, "agendamentos");
+      const contatosRef = collection(db, "contatos");
 
-      const consulta = query(
-        agendamentosRef,
-        where("data", "==", data),
-        where("horario", "==", horario)
-      );
-
-      const resultado = await getDocs(consulta);
-
-      if (!resultado.empty) {
-        setErro(
-          "Esse horário já está ocupado. Escolha outro dia ou horário."
-        );
-
-        setEnviando(false);
-        return;
-      }
-
-      // ==============================
-      // SALVA NO FIREBASE
-      // ==============================
-
-      await addDoc(agendamentosRef, {
+      await addDoc(contatosRef, {
         nome,
         telefone,
-        data,
-        horario,
-        status: "pendente",
+        idade: Number(idade),
+        regiao,
+        origem,
+
+        // CONTROLE INTERNO
+        status: "Novo contato",
+
         criadoEm: serverTimestamp(),
       });
 
-      // ==============================
-      // FORMATA DATA
-      // ==============================
-
-      const dataFormatada = new Date(
-        data + "T00:00:00"
-      ).toLocaleDateString("pt-BR");
-
-      // ==============================
+      // =========================
       // MENSAGEM WHATSAPP
-      // ==============================
+      // =========================
 
       const mensagem = `Olá! Vim pelo site da Coutinho Habilita.
 
 Meu nome é ${nome}.
+Tenho ${idade} anos.
+Moro em: ${regiao}.
 
-Gostaria de agendar uma aula:
+Meu WhatsApp: ${telefone}
 
-📅 Data: ${dataFormatada}
-🕐 Horário: ${horario}
-📱 Meu telefone: ${telefone}
+Conheci a Coutinho Habilita por: ${origem}
 
-Aguardo a confirmação do atendimento.`;
+Gostaria de saber mais sobre as aulas.`;
 
-      // ==============================
-      // WHATSAPP PRINCIPAL
-      // ==============================
+      // NOVO NÚMERO
+      const numeroAtendimento = "5511988988859";
 
-      const numeroAtendimento = "5511989138763";
-
-      const linkWhatsapp = `https://wa.me/${numeroAtendimento}?text=${encodeURIComponent(
-        mensagem
-      )}`;
+      const linkWhatsapp =
+        `https://wa.me/${numeroAtendimento}?text=` +
+        encodeURIComponent(mensagem);
 
       window.open(linkWhatsapp, "_blank");
 
-      // ==============================
+      // =========================
       // SUCESSO
-      // ==============================
+      // =========================
 
       setSucesso(true);
 
       setNome("");
       setTelefone("");
-      setData("");
-      setHorario("");
+      setIdade("");
+      setRegiao("");
+      setOrigem("");
 
     } catch (err) {
       console.error(err);
 
       setErro(
-        "Não foi possível agendar agora. Tente novamente em instantes."
+        "Não foi possível enviar seus dados agora. Tente novamente."
       );
-
     } finally {
       setEnviando(false);
     }
   };
 
-  // ==============================
+  // =========================
   // TELA DE SUCESSO
-  // ==============================
+  // =========================
 
   if (sucesso) {
     return (
       <div className="agenda-form">
 
         <p className="quiz-resultado">
-          ✅ Agendamento registrado!
+          ✅ Dados enviados com sucesso!
         </p>
 
         <p>
-          A equipe da <strong>Coutinho Habilita</strong> irá
-          confirmar seu atendimento pelo WhatsApp.
+          Obrigado pelo interesse na{" "}
+          <strong>Coutinho Habilita</strong>.
+        </p>
+
+        <p>
+          Nossa equipe entrará em contato pelo WhatsApp
+          para passar todas as informações.
         </p>
 
         <button
           className="close-lesson"
           onClick={() => setSucesso(false)}
         >
-          AGENDAR OUTRA AULA
+          ENVIAR OUTRA SOLICITAÇÃO
         </button>
 
       </div>
     );
   }
 
-  // ==============================
+  // =========================
   // FORMULÁRIO
-  // ==============================
+  // =========================
 
   return (
     <form
@@ -204,12 +190,12 @@ Aguardo a confirmação do atendimento.`;
           type="text"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          placeholder="Seu nome"
+          placeholder="Seu nome completo"
         />
       </label>
 
       <label>
-        Telefone
+        WhatsApp
 
         <input
           type="tel"
@@ -220,38 +206,64 @@ Aguardo a confirmação do atendimento.`;
       </label>
 
       <label>
-        Data
+        Idade
 
         <input
-          type="date"
-          value={data}
-          onChange={(e) => setData(e.target.value)}
+          type="number"
+          min="18"
+          max="100"
+          value={idade}
+          onChange={(e) => setIdade(e.target.value)}
+          placeholder="Sua idade"
         />
       </label>
 
       <label>
-        Horário
+        Onde você mora?
+
+        <input
+          type="text"
+          value={regiao}
+          onChange={(e) => setRegiao(e.target.value)}
+          placeholder="Ex: Lapa, Osasco, Barra Funda..."
+        />
+      </label>
+
+      <label>
+        Como conheceu a Coutinho Habilita?
 
         <select
-          value={horario}
-          onChange={(e) => setHorario(e.target.value)}
+          value={origem}
+          onChange={(e) => setOrigem(e.target.value)}
         >
-
           <option value="">
-            Selecione
+            Selecione uma opção
           </option>
 
-          {HORARIOS.map((h) => (
-            <option
-              key={h}
-              value={h}
-            >
-              {h}
-            </option>
-          ))}
+          <option value="Instagram">
+            Instagram
+          </option>
 
+          <option value="Indicação">
+            Indicação
+          </option>
+
+          <option value="Google">
+            Google
+          </option>
+
+          <option value="WhatsApp">
+            WhatsApp
+          </option>
+
+          <option value="Facebook">
+            Facebook
+          </option>
+
+          <option value="Outro">
+            Outro
+          </option>
         </select>
-
       </label>
 
       {erro && (
@@ -266,8 +278,8 @@ Aguardo a confirmação do atendimento.`;
         disabled={enviando}
       >
         {enviando
-          ? "AGENDANDO..."
-          : "AGENDAR AULA"}
+          ? "ENVIANDO..."
+          : "TENHO INTERESSE"}
       </button>
 
     </form>
