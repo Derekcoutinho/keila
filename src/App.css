@@ -6,12 +6,23 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: #f8f7f4;
   color: #102b50;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
 }
 
@@ -20,12 +31,22 @@ a {
   color: inherit;
 }
 
-button {
+button,
+input,
+select {
   font-family: inherit;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
 }
 
 .site {
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* =========================
@@ -37,6 +58,9 @@ button {
   inset: 0;
   z-index: 9999;
 
+  width: 100%;
+  height: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,10 +71,13 @@ button {
     rgba(8, 38, 75, 0.94),
     rgba(8, 38, 75, 0.97)
   );
+
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .welcome-card {
-  width: 100%;
+  width: min(650px, 100%);
   max-width: 650px;
 
   padding: 50px 40px;
@@ -97,6 +124,7 @@ button {
   color: #08264b;
   font-size: 42px;
   letter-spacing: 3px;
+  overflow-wrap: anywhere;
 }
 
 .welcome-card h2 {
@@ -150,8 +178,6 @@ button {
 
   font-weight: bold;
 
-  cursor: pointer;
-
   transition: 0.25s;
 }
 
@@ -197,6 +223,9 @@ button {
 
   min-height: 75px;
 
+  width: 100%;
+  max-width: 100%;
+
   padding: 12px 7%;
 
   display: flex;
@@ -215,6 +244,8 @@ button {
   font-weight: 800;
 
   letter-spacing: 2px;
+
+  white-space: nowrap;
 }
 
 .logo span {
@@ -225,6 +256,8 @@ nav {
   display: flex;
   gap: 25px;
   align-items: center;
+
+  max-width: 100%;
 }
 
 nav a {
@@ -246,6 +279,7 @@ nav a:hover {
   position: relative;
 
   width: 100%;
+  max-width: 100%;
 
   overflow: hidden;
 
@@ -254,9 +288,10 @@ nav a:hover {
 
 .hero img {
   width: 100%;
-  height: auto;
+  max-width: 100%;
 
-  max-height: 700px;
+  height: auto;
+  min-height: 0;
 
   object-fit: cover;
 
@@ -282,10 +317,11 @@ nav a:hover {
 
   transform: translate(-50%, -50%);
 
+  width: min(90%, 900px);
+  max-width: 900px;
+
   color: white;
   text-align: center;
-
-  width: 90%;
 }
 
 .hero-content > span {
@@ -302,6 +338,8 @@ nav a:hover {
   font-size: 55px;
 
   letter-spacing: 3px;
+
+  overflow-wrap: anywhere;
 }
 
 .hero-content p {
@@ -333,6 +371,8 @@ nav a:hover {
   cursor: pointer;
 
   transition: 0.25s;
+
+  text-align: center;
 }
 
 .primary {
@@ -360,8 +400,14 @@ nav a:hover {
 ========================= */
 
 .section {
+  width: 100%;
+  max-width: 100%;
+
   padding: 80px 7%;
+
   text-align: center;
+
+  overflow: hidden;
 }
 
 .section h2 {
@@ -370,6 +416,8 @@ nav a:hover {
   margin-bottom: 25px;
 
   color: #08264b;
+
+  overflow-wrap: anywhere;
 }
 
 .section-label {
@@ -407,18 +455,21 @@ nav a:hover {
 }
 
 .instructors-grid {
+  width: 100%;
   max-width: 900px;
 
   margin: auto;
 
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   gap: 30px;
 }
 
 .instructor-card {
+  min-width: 0;
+
   background: white;
 
   padding: 35px 30px;
@@ -485,23 +536,22 @@ nav a:hover {
   line-height: 1.6;
 }
 
-.instructor-card .button {
-  width: 100%;
-}
-
 .instructor-highlights {
+  width: 100%;
   max-width: 1000px;
 
   margin: 50px auto 0;
 
   display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   gap: 20px;
 }
 
 .instructor-highlights div {
+  min-width: 0;
+
   padding: 25px;
 
   background: #08264b;
@@ -536,18 +586,21 @@ nav a:hover {
 }
 
 .cards {
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 25px;
-
+  width: 100%;
   max-width: 1100px;
 
   margin: auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 25px;
 }
 
 .card {
+  min-width: 0;
+
   background: white;
 
   border: 2px solid #e0a21b;
@@ -646,6 +699,7 @@ nav a:hover {
 }
 
 .taxas {
+  width: 100%;
   max-width: 800px;
 
   margin: 35px auto 0;
@@ -684,18 +738,21 @@ nav a:hover {
 }
 
 .content-grid {
+  width: 100%;
   max-width: 1100px;
 
   margin: auto;
 
   display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   gap: 25px;
 }
 
 .content-card {
+  min-width: 0;
+
   background: white;
 
   padding: 30px 25px;
@@ -770,6 +827,7 @@ nav a:hover {
 ========================= */
 
 .lesson {
+  width: 100%;
   max-width: 900px;
 
   margin: 40px auto 0;
@@ -783,6 +841,8 @@ nav a:hover {
   text-align: left;
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+  overflow-wrap: anywhere;
 }
 
 .lesson h3 {
@@ -832,6 +892,8 @@ nav a:hover {
 ========================= */
 
 .opcoes-container {
+  width: 100%;
+
   display: flex;
 
   flex-direction: column;
@@ -842,6 +904,8 @@ nav a:hover {
 }
 
 .opcoes-container button {
+  width: 100%;
+
   padding: 14px;
 
   cursor: pointer;
@@ -855,6 +919,8 @@ nav a:hover {
   color: #08264b;
 
   font-weight: bold;
+
+  overflow-wrap: anywhere;
 }
 
 .opcoes-container button:hover {
@@ -878,6 +944,7 @@ nav a:hover {
 }
 
 .agenda-form {
+  width: 100%;
   max-width: 420px;
 
   margin: 0 auto;
@@ -905,6 +972,9 @@ nav a:hover {
 
 .agenda-form input,
 .agenda-form select {
+  width: 100%;
+  max-width: 100%;
+
   padding: 12px;
 
   border-radius: 7px;
@@ -925,11 +995,16 @@ nav a:hover {
 ========================= */
 
 .contact {
+  width: 100%;
+  max-width: 100%;
+
   text-align: center;
 
   padding: 80px 20px;
 
   background: #e9e6df;
+
+  overflow: hidden;
 }
 
 .contact h2 {
@@ -954,6 +1029,8 @@ nav a:hover {
   font-size: 20px;
 
   font-weight: bold;
+
+  overflow-wrap: anywhere;
 }
 
 .instagram-link:hover {
@@ -987,6 +1064,8 @@ nav a:hover {
 ========================= */
 
 footer {
+  width: 100%;
+
   padding: 25px;
 
   text-align: center;
@@ -1003,122 +1082,249 @@ footer {
 ========================= */
 
 @media (max-width: 800px) {
-  .header {
-    height: auto;
 
-    padding: 18px 20px;
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .header {
+    position: sticky;
+
+    width: 100%;
+
+    padding: 16px 15px;
 
     flex-direction: column;
 
     gap: 15px;
+
+    overflow: hidden;
   }
 
   .logo {
-    font-size: 22px;
+    font-size: 21px;
+
+    text-align: center;
+
+    white-space: normal;
   }
 
   nav {
-    gap: 12px;
+    width: 100%;
+
+    display: flex;
 
     flex-wrap: wrap;
 
     justify-content: center;
+
+    gap: 8px 12px;
   }
 
   nav a {
     font-size: 13px;
   }
 
+  /* HERO */
+
   .hero {
+    width: 100%;
     min-height: 500px;
   }
 
   .hero img {
-    min-height: 500px;
+    width: 100%;
+    height: 500px;
 
     object-fit: cover;
   }
 
   .hero-content {
-    left: 20px;
-    right: 20px;
+    width: calc(100% - 30px);
 
-    width: auto;
+    max-width: 100%;
+
+    left: 50%;
+    right: auto;
 
     text-align: center;
   }
 
+  .hero-content > span {
+    font-size: 12px;
+
+    letter-spacing: 1.5px;
+  }
+
   .hero-content h1 {
-    font-size: 38px;
+    font-size: clamp(28px, 9vw, 38px);
+
+    line-height: 1.1;
+
+    letter-spacing: 1px;
+
+    margin: 10px 0;
   }
 
   .hero-content p {
-    font-size: 21px;
+    font-size: 20px;
+
+    margin-bottom: 20px;
   }
 
   .hero-buttons {
-    justify-content: center;
+    width: 100%;
 
     flex-direction: column;
+
+    gap: 10px;
   }
 
-  .cards {
-    grid-template-columns: 1fr;
-
-    max-width: 450px;
-  }
-
-  .content-grid {
-    grid-template-columns: 1fr;
-
-    max-width: 450px;
-  }
-
-  .instructors-grid {
-    grid-template-columns: 1fr;
-
-    max-width: 450px;
-  }
-
-  .instructor-highlights {
-    grid-template-columns: 1fr;
-
-    max-width: 450px;
-  }
-
-  .section {
-    padding: 60px 20px;
-  }
-
-  .section h2 {
-    font-size: 28px;
-  }
-
-  .welcome-card {
-    padding: 35px 20px;
-  }
-
-  .welcome-card h1 {
-    font-size: 30px;
-  }
-
-  .welcome-card h2 {
-    font-size: 21px;
-  }
-
-  .welcome-buttons {
-    flex-direction: column;
-  }
-
-  .welcome-primary,
-  .welcome-secondary {
+  .hero-buttons .button {
     width: 100%;
   }
 
+  /* SEÇÕES */
+
+  .section {
+    width: 100%;
+
+    padding: 60px 15px;
+
+    overflow: hidden;
+  }
+
+  .section h2 {
+    font-size: 27px;
+
+    line-height: 1.2;
+  }
+
+  .section-intro {
+    font-size: 16px;
+
+    line-height: 1.5;
+  }
+
+  /* INSTRUTORES */
+
+  .instructors-grid {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+  .instructor-card {
+    width: 100%;
+
+    padding: 30px 20px;
+  }
+
+  .instructor-card p {
+    min-height: auto;
+  }
+
+  .instructor-highlights {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+
+    margin-top: 35px;
+  }
+
+  /* PLANOS */
+
+  .cards {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+
+    padding: 35px 20px;
+  }
+
+  .card h3 {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+
+  .card-tag {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+
+  .card strong {
+    font-size: 29px;
+  }
+
+  /* CONTEÚDOS */
+
+  .content-grid {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+  .content-card {
+    width: 100%;
+
+    padding: 30px 20px;
+  }
+
+  .content-card p {
+    min-height: auto;
+  }
+
+  /* LIÇÃO */
+
+  .lesson {
+    width: 100%;
+
+    padding: 25px 20px;
+
+    margin-top: 30px;
+  }
+
+  /* AGENDA */
+
+  .agenda-form {
+    width: 100%;
+
+    max-width: 100%;
+  }
+
+  .agenda-form input,
+  .agenda-form select {
+    width: 100%;
+  }
+
+  /* CONTATO */
+
+  .contact {
+    padding: 60px 15px;
+  }
+
   .contact-buttons {
+    width: 100%;
+
     flex-direction: column;
 
     align-items: center;
+
+    gap: 10px;
   }
 
   .contact-buttons .button {
@@ -1126,117 +1332,129 @@ footer {
 
     max-width: 350px;
   }
-}
 
-/* =========================
-   CORREÇÃO DE OVERFLOW
-========================= */
-
-html,
-body {
-  overflow-x: hidden;
-  max-width: 100%;
-}
-
-#root {
-  overflow-x: hidden;
-  width: 100%;
-}html,
-body,
-#root {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-.site {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-img {
-  max-width: 100%;
-}
-
-button,
-input,
-select {
-  max-width: 100%;
-}
-
-@media (max-width: 800px) {
-  .hero,
-  .section,
-  .contact,
-  .contents,
-  .plans-section,
-  .instructors,
-  .agenda {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
+  /* TELA DE ENTRADA */
 
   .welcome-overlay {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+    padding: 12px;
+
+    align-items: flex-start;
+
+    padding-top: 25px;
+
+    padding-bottom: 25px;
   }
 
   .welcome-card {
-    width: calc(100% - 20px);
-    max-width: 650px;
-    margin: 0 auto;
+    width: 100%;
+
+    max-width: 100%;
+
+    padding: 30px 18px;
+
+    border-radius: 18px;
+  }
+
+  .welcome-icon {
+    font-size: 45px;
+  }
+
+  .welcome-small {
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .welcome-card h1 {
+    font-size: clamp(25px, 8vw, 32px);
+
+    line-height: 1.1;
+
+    letter-spacing: 1px;
+  }
+
+  .welcome-card h2 {
+    font-size: 21px;
+  }
+
+  .welcome-card > p {
+    font-size: 17px;
+  }
+
+  .welcome-description {
+    font-size: 15px !important;
+
+    line-height: 1.5;
+  }
+
+  .welcome-buttons {
+    width: 100%;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .welcome-primary,
+  .welcome-secondary {
+    width: 100%;
+
+    padding: 14px 15px;
+  }
+
+  .welcome-info {
+    font-size: 12px;
+
+    line-height: 1.4;
+  }
+}
+
+/* =========================
+   CELULARES PEQUENOS
+========================= */
+
+@media (max-width: 380px) {
+
+  .header {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  nav {
+    gap: 7px 9px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .hero {
+    min-height: 470px;
+  }
+
+  .hero img {
+    height: 470px;
   }
 
   .hero-content {
-    width: calc(100% - 40px);
-    max-width: 100%;
+    width: calc(100% - 24px);
   }
 
   .hero-content h1 {
-    max-width: 100%;
-    word-wrap: break-word;
+    font-size: 28px;
   }
 
   .hero-content p {
-    max-width: 100%;
-    word-wrap: break-word;
+    font-size: 18px;
   }
 
-  .cards,
-  .content-grid,
-  .instructors-grid,
-  .instructor-highlights {
-    width: 100%;
-    max-width: 450px;
+  .section {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
-  .card,
-  .content-card,
-  .instructor-card {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .lesson {
-    width: calc(100% - 30px);
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .agenda-form {
-    width: 100%;
-    max-width: 420px;
-  }
-
-  .agenda-form input,
-  .agenda-form select {
-    width: 100%;
-    max-width: 100%;
+  .welcome-card {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
