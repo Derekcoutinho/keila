@@ -1129,3 +1129,17 @@ footer {
     max-width: 350px;
   }
 }
+/* Fix overflow horizontal no mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+#root {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
