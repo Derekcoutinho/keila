@@ -101,6 +101,26 @@ function Agenda({ interesseInicial = "" }) {
         criadoEm: serverTimestamp(),
       });
 
+      // Envia os mesmos dados para a planilha, uma única vez por envio
+      fetch(
+        "https://script.google.com/macros/s/AKfycbyUV01Xc2uOGFvU83fxvjBqEftn_yceerhQlKB96Lsff98u5P9zC_kZZN0okGlcAdNN/exec",
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({
+            nome,
+            telefone,
+            idade: Number(idade),
+            regiao,
+            nivel,
+            origem,
+            interesse,
+            status: "Novo contato",
+          }),
+        }
+      ).catch((err) => console.error("Erro ao enviar para planilha:", err));
+
       const mensagem = interesse.startsWith("Quero conhecer")
         ? "Olá! Vim pelo site da Coutinho Habilita e gostaria de conhecer as opções de aulas."
         : `Olá! Vim pelo site da Coutinho Habilita e tenho interesse no ${interesse}. Gostaria de mais informações.`;
