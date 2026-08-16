@@ -281,12 +281,14 @@ nav a:hover {
 .hero-content {
   position: absolute;
 
-  left: 7%;
+  left: 50%;
   top: 50%;
 
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
 
   color: white;
+  text-align: center;
+  width: 90%;
 }
 
 .hero-content > span {
@@ -313,6 +315,7 @@ nav a:hover {
 .hero-buttons {
   display: flex;
   gap: 15px;
+  justify-content: center;
 }
 
 /* =========================

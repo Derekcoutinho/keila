@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "./firebase";
 import {
   collection,
@@ -6,16 +6,22 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-function Agenda() {
+function Agenda({ interesseInicial = "" }) {
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [idade, setIdade] = useState("");
   const [regiao, setRegiao] = useState("");
+  const [nivel, setNivel] = useState("");
   const [origem, setOrigem] = useState("");
+  const [interesse, setInteresse] = useState(interesseInicial);
 
   const [enviando, setEnviando] = useState(false);
   const [sucesso, setSucesso] = useState(false);
   const [erro, setErro] = useState("");
+
+  useEffect(() => {
+    setInteresse(interesseInicial);
+  }, [interesseInicial]);
 
   const formatarTelefone = (valor) => {
     const numeros = valor.replace(/\D/g, "").slice(0, 11);
@@ -49,11 +55,15 @@ function Agenda() {
 
     setErro("");
 
-    // =========================
-    // VALIDAÇÃO
-    // =========================
-
-    if (!nome || !telefone || !idade || !regiao || !origem) {
+    if (
+      !nome ||
+      !telefone ||
+      !idade ||
+      !regiao ||
+      !nivel ||
+      !origem ||
+      !interesse
+    ) {
       setErro("Preencha todos os campos.");
       return;
     }
@@ -73,10 +83,6 @@ function Agenda() {
     setEnviando(true);
 
     try {
-      // =========================
-      // SALVAR NO FIREBASE
-      // =========================
-
       const contatosRef = collection(db, "contatos");
 
       await addDoc(contatosRef, {
@@ -84,31 +90,21 @@ function Agenda() {
         telefone,
         idade: Number(idade),
         regiao,
+        nivel,
         origem,
+        interesse,
 
         // CONTROLE INTERNO
         status: "Novo contato",
 
+        // DATA E HORA AUTOMÁTICAS
         criadoEm: serverTimestamp(),
       });
 
-      // =========================
-      // MENSAGEM WHATSAPP
-      // =========================
+      const mensagem = interesse.startsWith("Quero conhecer")
+        ? "Olá! Vim pelo site da Coutinho Habilita e gostaria de conhecer as opções de aulas."
+        : `Olá! Vim pelo site da Coutinho Habilita e tenho interesse no ${interesse}. Gostaria de mais informações.`;
 
-      const mensagem = `Olá! Vim pelo site da Coutinho Habilita.
-
-Meu nome é ${nome}.
-Tenho ${idade} anos.
-Moro em: ${regiao}.
-
-Meu WhatsApp: ${telefone}
-
-Conheci a Coutinho Habilita por: ${origem}
-
-Gostaria de saber mais sobre as aulas.`;
-
-      // NOVO NÚMERO
       const numeroAtendimento = "5511988988859";
 
       const linkWhatsapp =
@@ -117,17 +113,15 @@ Gostaria de saber mais sobre as aulas.`;
 
       window.open(linkWhatsapp, "_blank");
 
-      // =========================
-      // SUCESSO
-      // =========================
-
       setSucesso(true);
 
       setNome("");
       setTelefone("");
       setIdade("");
       setRegiao("");
+      setNivel("");
       setOrigem("");
+      setInteresse("");
 
     } catch (err) {
       console.error(err);
@@ -139,10 +133,6 @@ Gostaria de saber mais sobre as aulas.`;
       setEnviando(false);
     }
   };
-
-  // =========================
-  // TELA DE SUCESSO
-  // =========================
 
   if (sucesso) {
     return (
@@ -158,8 +148,8 @@ Gostaria de saber mais sobre as aulas.`;
         </p>
 
         <p>
-          Nossa equipe entrará em contato pelo WhatsApp
-          para passar todas as informações.
+          Seus dados foram registrados e nossa equipe
+          continuará o atendimento pelo WhatsApp.
         </p>
 
         <button
@@ -172,10 +162,6 @@ Gostaria de saber mais sobre as aulas.`;
       </div>
     );
   }
-
-  // =========================
-  // FORMULÁRIO
-  // =========================
 
   return (
     <form
@@ -230,7 +216,40 @@ Gostaria de saber mais sobre as aulas.`;
       </label>
 
       <label>
-        Como conheceu a Coutinho Habilita?
+        Qual é o seu nível de conhecimento com direção?
+
+        <select
+          value={nivel}
+          onChange={(e) => setNivel(e.target.value)}
+        >
+          <option value="">
+            Selecione uma opção
+          </option>
+
+          <option value="Nunca dirigi">
+            Nunca dirigi
+          </option>
+
+          <option value="Já tive pouco contato com carro">
+            Já tive pouco contato com carro
+          </option>
+
+          <option value="Já dirijo, mas tenho pouca experiência">
+            Já dirijo, mas tenho pouca experiência
+          </option>
+
+          <option value="Já tenho bastante experiência">
+            Já tenho bastante experiência
+          </option>
+
+          <option value="Já sou habilitado e quero aperfeiçoamento">
+            Já sou habilitado e quero aperfeiçoamento
+          </option>
+        </select>
+      </label>
+
+      <label>
+        Por onde você conheceu a Coutinho Habilita?
 
         <select
           value={origem}
@@ -240,12 +259,16 @@ Gostaria de saber mais sobre as aulas.`;
             Selecione uma opção
           </option>
 
-          <option value="Instagram">
-            Instagram
-          </option>
-
           <option value="Indicação">
             Indicação
+          </option>
+
+          <option value="CNH Brasil">
+            CNH Brasil
+          </option>
+
+          <option value="Instagram">
+            Instagram
           </option>
 
           <option value="Google">
@@ -260,8 +283,49 @@ Gostaria de saber mais sobre as aulas.`;
             Facebook
           </option>
 
+          <option value="TikTok">
+            TikTok
+          </option>
+
           <option value="Outro">
             Outro
+          </option>
+        </select>
+      </label>
+
+      <label>
+        O que você procura?
+
+        <select
+          value={interesse}
+          onChange={(e) => setInteresse(e.target.value)}
+        >
+          <option value="">
+            Selecione uma opção
+          </option>
+
+          <option value="Quero conhecer as opções">
+            Quero conhecer as opções
+          </option>
+
+          <option value="2 AULAS — R$ 500,00">
+            2 AULAS — R$ 500,00
+          </option>
+
+          <option value="6 AULAS — R$ 800,00">
+            6 AULAS — R$ 800,00
+          </option>
+
+          <option value="10 AULAS — R$ 1.100,00">
+            10 AULAS — R$ 1.100,00
+          </option>
+
+          <option value="15 AULAS — R$ 1.300,00">
+            15 AULAS — R$ 1.300,00
+          </option>
+
+          <option value="20 AULAS — R$ 1.600,00">
+            20 AULAS — R$ 1.600,00
           </option>
         </select>
       </label>

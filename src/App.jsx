@@ -5,6 +5,7 @@ import Agenda from "./Agenda";
 function App() {
   const [conteudoAberto, setConteudoAberto] = useState(null);
   const [mostrarEntrada, setMostrarEntrada] = useState(true);
+  const [interesseInicial, setInteresseInicial] = useState("");
 
   const lessonRef = useRef(null);
 
@@ -244,9 +245,9 @@ function App() {
         >
 
           <img
-            src="/banner-coutinho.jpeg"
-            alt="Coutinho Habilita - Instrutores de Trânsito"
-          />
+  src="/placa-aprovado-sol.png"
+  alt="Coutinho Habilita - Instrutores de Trânsito"
+/>
 
           <div className="hero-overlay"></div>
 
@@ -446,11 +447,17 @@ function App() {
                 </small>
 
                 <button
-                  onClick={() =>
-                    abrirWhatsApp(
-                      `Olá! Vim pelo site da Coutinho Habilita e tenho interesse no plano de ${plano.aulas} no valor de ${plano.valor}. Gostaria de mais informações.`
-                    )
-                  }
+                  onClick={() => {
+                    setInteresseInicial(
+                      `${plano.aulas} — ${plano.valor}`
+                    );
+
+                    document
+                      .getElementById("agenda")
+                      ?.scrollIntoView({
+                        behavior: "smooth",
+                      });
+                  }}
                 >
                   QUERO ESTE PLANO
                 </button>
@@ -489,10 +496,7 @@ function App() {
           <div className="content-grid">
 
             <div className="content-card">
-
-              <span>
-                🚦
-              </span>
+              <span>🚦</span>
 
               <h3>
                 Sinalização
@@ -509,14 +513,10 @@ function App() {
               >
                 VER CONTEÚDO
               </button>
-
             </div>
 
             <div className="content-card">
-
-              <span>
-                📖
-              </span>
+              <span>📖</span>
 
               <h3>
                 Legislação
@@ -533,14 +533,10 @@ function App() {
               >
                 VER CONTEÚDO
               </button>
-
             </div>
 
             <div className="content-card">
-
-              <span>
-                🛡️
-              </span>
+              <span>🛡️</span>
 
               <h3>
                 Direção defensiva
@@ -557,14 +553,10 @@ function App() {
               >
                 VER CONTEÚDO
               </button>
-
             </div>
 
             <div className="content-card">
-
-              <span>
-                🔧
-              </span>
+              <span>🔧</span>
 
               <h3>
                 Mecânica básica
@@ -582,14 +574,10 @@ function App() {
               >
                 VER CONTEÚDO
               </button>
-
             </div>
 
             <div className="content-card">
-
-              <span>
-                🩹
-              </span>
+              <span>🩹</span>
 
               <h3>
                 Primeiros socorros
@@ -607,14 +595,10 @@ function App() {
               >
                 VER CONTEÚDO
               </button>
-
             </div>
 
             <div className="content-card">
-
-              <span>
-                📝
-              </span>
+              <span>📝</span>
 
               <h3>
                 Simulados
@@ -631,7 +615,6 @@ function App() {
               >
                 COMEÇAR SIMULADO
               </button>
-
             </div>
 
           </div>
@@ -641,12 +624,10 @@ function App() {
           ========================== */}
 
           {conteudoAberto === "sinalizacao" && (
-
             <div
               className="lesson"
               ref={lessonRef}
             >
-
               <h3>
                 🚦 Sinalização de Trânsito
               </h3>
@@ -663,18 +644,14 @@ function App() {
               >
                 FECHAR CONTEÚDO
               </button>
-
             </div>
-
           )}
 
           {conteudoAberto === "legislacao" && (
-
             <div
               className="lesson"
               ref={lessonRef}
             >
-
               <h3>
                 📖 Legislação de Trânsito
               </h3>
@@ -692,18 +669,14 @@ function App() {
               >
                 FECHAR CONTEÚDO
               </button>
-
             </div>
-
           )}
 
           {conteudoAberto === "defensiva" && (
-
             <div
               className="lesson"
               ref={lessonRef}
             >
-
               <h3>
                 🛡️ Direção Defensiva
               </h3>
@@ -720,18 +693,14 @@ function App() {
               >
                 FECHAR CONTEÚDO
               </button>
-
             </div>
-
           )}
 
           {conteudoAberto === "mecanica" && (
-
             <div
               className="lesson"
               ref={lessonRef}
             >
-
               <h3>
                 🔧 Mecânica Básica
               </h3>
@@ -748,18 +717,14 @@ function App() {
               >
                 FECHAR CONTEÚDO
               </button>
-
             </div>
-
           )}
 
           {conteudoAberto === "socorros" && (
-
             <div
               className="lesson"
               ref={lessonRef}
             >
-
               <h3>
                 🩹 Primeiros Socorros
               </h3>
@@ -777,9 +742,7 @@ function App() {
               >
                 FECHAR CONTEÚDO
               </button>
-
             </div>
-
           )}
 
           {/* =========================
@@ -787,7 +750,6 @@ function App() {
           ========================== */}
 
           {conteudoAberto === "simulado" && (
-
             <div
               className="lesson simulado-container"
               ref={lessonRef}
@@ -863,7 +825,6 @@ function App() {
               )}
 
             </div>
-
           )}
 
         </section>
@@ -891,7 +852,8 @@ function App() {
             opções de aulas e combinar o melhor dia e horário.
           </p>
 
-          <Agenda />
+          {/* ALTERAÇÃO IMPORTANTE AQUI */}
+          <Agenda interesseInicial={interesseInicial} />
 
         </section>
 
