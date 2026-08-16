@@ -12,6 +12,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: #f8f7f4;
   color: #102b50;
+  overflow-x: hidden;
 }
 
 a {
@@ -42,11 +43,10 @@ button {
 
   padding: 20px;
 
-  background:
-    linear-gradient(
-      rgba(8, 38, 75, 0.94),
-      rgba(8, 38, 75, 0.97)
-    );
+  background: linear-gradient(
+    rgba(8, 38, 75, 0.94),
+    rgba(8, 38, 75, 0.97)
+  );
 }
 
 .welcome-card {
@@ -94,18 +94,14 @@ button {
 
 .welcome-card h1 {
   margin-top: 10px;
-
   color: #08264b;
-
   font-size: 42px;
   letter-spacing: 3px;
 }
 
 .welcome-card h2 {
   margin: 15px 0 8px;
-
   color: #d99a16;
-
   font-size: 25px;
 }
 
@@ -288,6 +284,7 @@ nav a:hover {
 
   color: white;
   text-align: center;
+
   width: 90%;
 }
 
@@ -1006,7 +1003,6 @@ footer {
 ========================= */
 
 @media (max-width: 800px) {
-
   .header {
     height: auto;
 
@@ -1046,6 +1042,8 @@ footer {
   .hero-content {
     left: 20px;
     right: 20px;
+
+    width: auto;
 
     text-align: center;
   }
@@ -1129,8 +1127,13 @@ footer {
     max-width: 350px;
   }
 }
-/* Fix overflow horizontal no mobile */
-html, body {
+
+/* =========================
+   CORREÇÃO DE OVERFLOW
+========================= */
+
+html,
+body {
   overflow-x: hidden;
   max-width: 100%;
 }
@@ -1138,8 +1141,102 @@ html, body {
 #root {
   overflow-x: hidden;
   width: 100%;
+}html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-* {
-  box-sizing: border-box;
+.site {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+input,
+select {
+  max-width: 100%;
+}
+
+@media (max-width: 800px) {
+  .hero,
+  .section,
+  .contact,
+  .contents,
+  .plans-section,
+  .instructors,
+  .agenda {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .welcome-overlay {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .welcome-card {
+    width: calc(100% - 20px);
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .hero-content {
+    width: calc(100% - 40px);
+    max-width: 100%;
+  }
+
+  .hero-content h1 {
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+
+  .hero-content p {
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+
+  .cards,
+  .content-grid,
+  .instructors-grid,
+  .instructor-highlights {
+    width: 100%;
+    max-width: 450px;
+  }
+
+  .card,
+  .content-card,
+  .instructor-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .lesson {
+    width: calc(100% - 30px);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .agenda-form {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .agenda-form input,
+  .agenda-form select {
+    width: 100%;
+    max-width: 100%;
+  }
 }
