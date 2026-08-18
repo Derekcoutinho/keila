@@ -87,23 +87,23 @@ function App() {
   const planos = [
     {
       aulas: "2 AULAS",
-      valor: "R$ 500,00",
+      valor: "R$ 400,00",
     },
     {
       aulas: "6 AULAS",
-      valor: "R$ 800,00",
+      valor: "R$ 700,00",
     },
     {
       aulas: "10 AULAS",
-      valor: "R$ 1.100,00",
+      valor: "R$ 1.000,00",
     },
     {
       aulas: "15 AULAS",
-      valor: "R$ 1.300,00",
+      valor: "R$ 1.100,00",
     },
     {
       aulas: "20 AULAS",
-      valor: "R$ 1.600,00",
+      valor: "R$ 1.400,00",
     },
   ];
 
