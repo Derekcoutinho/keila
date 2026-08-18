@@ -44,7 +44,8 @@ button {
 
 .site {
   width: 100%;
-  max-width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -173,6 +174,7 @@ button {
   border: none;
 
   padding: 15px 25px;
+  min-height: 44px;
 
   border-radius: 8px;
 
@@ -358,9 +360,12 @@ nav a:hover {
 ========================= */
 
 .button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   padding: 15px 28px;
+  min-height: 44px;
 
   border-radius: 8px;
 
@@ -682,6 +687,7 @@ nav a:hover {
   color: white;
 
   padding: 14px;
+  min-height: 44px;
 
   border-radius: 7px;
 
@@ -806,6 +812,7 @@ nav a:hover {
   color: white;
 
   padding: 12px 18px;
+  min-height: 44px;
 
   border-radius: 7px;
 
@@ -869,6 +876,7 @@ nav a:hover {
   color: white;
 
   padding: 12px 22px;
+  min-height: 44px;
 
   border-radius: 7px;
 
@@ -907,6 +915,7 @@ nav a:hover {
   width: 100%;
 
   padding: 14px;
+  min-height: 44px;
 
   cursor: pointer;
 
@@ -976,6 +985,7 @@ nav a:hover {
   max-width: 100%;
 
   padding: 12px;
+  min-height: 44px;
 
   border-radius: 7px;
 
@@ -1075,6 +1085,19 @@ footer {
   color: white;
 
   font-size: 14px;
+}
+
+/* =========================
+   TABLETS
+========================= */
+
+@media (max-width: 1024px) and (min-width: 801px) {
+
+  .cards,
+  .content-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
 }
 
 /* =========================
